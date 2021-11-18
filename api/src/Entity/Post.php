@@ -7,14 +7,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ApiResource(mercure: true)]
+#[ApiResource(
+    collectionOperations: ['get'],
+    itemOperations: ['get', 'post', 'patch'],
+    mercure: true,
+)]
 #[ORM\Entity]
 #[ORM\Table(name: "posts")]
 class Post
 {
     #[ORM\Id]
-    #[ORM\Column(name: 'id', type: 'integer')]
     #[ORM\GeneratedValue]
+    #[ORM\Column(name: 'id', type: 'integer')]
     private ?int $id = null;
 
     #[ORM\Column(name: '`userId`', type: 'integer')]
@@ -30,7 +34,6 @@ class Post
     private string $body;
 
     #[ORM\Column(name: '`createdAt`', type: 'datetimetz_immutable')]
-    #[Assert\NotBlank]
     private ?DateTimeInterface $createdAt;
 
     public function getId(): ?int
